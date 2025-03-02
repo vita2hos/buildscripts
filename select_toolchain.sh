@@ -17,7 +17,7 @@ do
   echo
   echo "Please select the toolchain you require"
   echo
-  echo "1: devkitARM (gba gp32 ds 3ds)"
+  echo "1: devkitARM (gba gp32 ds 3ds switch32)"
   echo "2: devkitPPC (gamecube wii wii-u)"
   echo "3: devkitA64 (switch)"
   read VERSION

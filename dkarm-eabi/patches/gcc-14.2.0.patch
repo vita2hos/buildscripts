@@ -27,11 +27,22 @@ index 451b15fe9f9..c9efaf21c8c 100644
   option fp add VFPv2 FP_DBL
   optalias vfpv2 fp
   option nofp remove ALL_FP
+diff --git a/gcc/config/arm/arm.h b/gcc/config/arm/arm.h
+index 47c13a9e57f2..379999d3c1a6 100644
+--- a/gcc/config/arm/arm.h
++++ b/gcc/config/arm/arm.h
+@@ -744,2 +744,6 @@ #define WCHAR_TYPE_SIZE BITS_PER_WORD
+ #endif
+
++/* use int and unsigned int for int32_t and uint32_t */
++#undef STDINT_LONG32
++#define STDINT_LONG32 0
++
 diff --git a/gcc/config/arm/t-arm-elf b/gcc/config/arm/t-arm-elf
 index aa64e50edeb..99cc8199ec5 100644
 --- a/gcc/config/arm/t-arm-elf
 +++ b/gcc/config/arm/t-arm-elf
-@@ -16,120 +16,22 @@
+@@ -16,120 +16,14 @@
  # along with GCC; see the file COPYING3.  If not see
  # <http://www.gnu.org/licenses/>.
  
@@ -81,8 +92,8 @@ index aa64e50edeb..99cc8199ec5 100644
 -
 -MULTILIB_OPTIONS     =
 -MULTILIB_DIRNAMES    =
-+MULTILIB_OPTIONS     = mthumb mbig-endian march=armv6k march=armv6s-m mfloat-abi=hard mfloat-abi=soft
-+MULTILIB_DIRNAMES    = thumb be armv6k v6-m fpu nofp
++MULTILIB_OPTIONS     = marm/mthumb march=armv8-a+crc mfloat-abi=hard fPIC
++MULTILIB_DIRNAMES    = marm thumb armv8-a+crc fpu pic
  MULTILIB_EXCEPTIONS  = 
  MULTILIB_MATCHES     =
 -MULTILIB_REUSE	     =
@@ -134,7 +145,7 @@ index aa64e50edeb..99cc8199ec5 100644
 -			  march?armv7+fp=march?$(ARCH) \
 -			  $(foreach FPARCH, $(v8_fps), \
 -			    march?armv7+fp=march?$(ARCH)+$(FPARCH)))
-+MULTILIB_REQUIRED    = mthumb mbig-endian mthumb/mbig-endian march=armv6k/mfloat-abi=hard mthumb/march=armv6s-m/mfloat-abi=soft
++MULTILIB_REQUIRED    = mthumb/march=armv8-a+crc/mfloat-abi=hard/fpu/fPIC marm/march=armv8-a+crc/mfloat-abi=hard/fpu/fPIC
  
 -MULTILIB_MATCHES     += $(foreach ARCH, $(all_v9_archs), \
 -			  march?armv7+fp=march?$(ARCH) \
@@ -143,16 +154,9 @@ index aa64e50edeb..99cc8199ec5 100644
  
 -MULTILIB_MATCHES     += $(foreach ARCH, armv7e-m armv8-m.mainline, \
 -			  march?armv7+fp=march?$(ARCH)+fp.dp)
-+MULTILIB_MATCHES    += march?armv6k=mtune?mpcore
-+MULTILIB_MATCHES    += march?armv6k=mcpu?mpcore
  
 -# PART 4 - Reuse rules
-+MULTILIB_MATCHES    += march?armv6s-m=mcpu?cortex-m0
-+MULTILIB_MATCHES    += march?armv6s-m=mtune?cortex-m0
-+MULTILIB_MATCHES    += march?armv6s-m=mcpu?cortex-m0plus
-+MULTILIB_MATCHES    += march?armv6s-m=mtune?cortex-m0plus
-+MULTILIB_MATCHES    += march?armv6s-m=mcpu?cortex-m1
-+MULTILIB_MATCHES    += march?armv6s-m=mtune?cortex-m1
++MULTILIB_MATCHES    += fPIC=fpic fPIC=fpie fPIC=fPIE
  
 -MULTILIB_REUSE	     += mthumb=mthumb/mfpu.auto
 -MULTILIB_REUSE	     += mthumb=mthumb/mfpu.auto/march.armv5te+fp
@@ -163,7 +167,6 @@ index aa64e50edeb..99cc8199ec5 100644
 -MULTILIB_REUSE	     += mthumb/mfpu.auto/march.armv7+fp/mfloat-abi.hard=mthumb/march.armv7+fp/mfloat-abi.hard
 -MULTILIB_REUSE	     += mthumb/mfpu.auto/march.armv7+fp/mfloat-abi.hard=mfpu.auto/march.armv7+fp/mfloat-abi.hard
 -MULTILIB_REUSE	     += mthumb/mfpu.auto/march.armv7+fp/mfloat-abi.hard=march.armv7+fp/mfloat-abi.hard
-+MULTILIB_REUSE       = mthumb/march.armv6s-m/mfloat-abi.soft=mthumb/march.armv6s-m
 diff --git a/gcc/config/arm/unknown-elf.h b/gcc/config/arm/unknown-elf.h
 index 6b313042f20..7b39702224a 100644
 --- a/gcc/config/arm/unknown-elf.h
