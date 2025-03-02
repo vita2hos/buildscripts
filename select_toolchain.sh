@@ -17,7 +17,7 @@ do
   echo
   echo "Please select the toolchain you require"
   echo
-  echo "1: devkitARM (gba gp32 ds 3ds)"
+  echo "1: devkitARM (gba gp32 ds 3ds switch32)"
   echo "2: devkitPPC (gamecube wii wii-u)"
   echo "3: devkitA64 (switch)"
   read VERSION
@@ -41,7 +41,9 @@ case "$VERSION" in
     target=arm-none-eabi
     toolchain=DEVKITARM
     _prefix=devkitarm
-    _toolchain_options='--with-march=armv4t --enable-interwork --enable-multilib --with-pkgversion="devkitARM"'
+    _toolchain_options='--enable-interwork --enable-multilib --with-pkgversion="devkitARM"'
+    _gcc_additional_cflags='-fPIC'
+    _gcc_additional_cxxflags='-fPIC'
     _rules_ver=${DKARM_RULES_VER}
     _crtls_ver=${DKARM_CRTLS_VER}
   ;;
