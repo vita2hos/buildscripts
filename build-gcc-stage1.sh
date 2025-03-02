@@ -12,8 +12,8 @@ if [ ! -f configured-gcc ]
 then
 	CPPFLAGS="$cppflags $CPPFLAGS" \
 	LDFLAGS="$ldflags $LDFLAGS" \
-	CFLAGS_FOR_TARGET="-O2 -ffunction-sections -fdata-sections" \
-	CXXFLAGS_FOR_TARGET="-O2 -ffunction-sections -fdata-sections" \
+	CFLAGS_FOR_TARGET="-O2 -ffunction-sections -fdata-sections ${_gcc_additional_cflags}" \
+	CXXFLAGS_FOR_TARGET="-O2 -ffunction-sections -fdata-sections ${_gcc_additional_cxxflags}" \
 	LDFLAGS_FOR_TARGET="" \
 	../../gcc-$GCC_VER/configure \
 		--target=$target \
