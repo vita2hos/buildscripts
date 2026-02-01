@@ -66,10 +66,10 @@ case "$VERSION" in
   "3" )
     GCC_VER=15.2.0
     BINUTILS_VER=2.45.1
-    NEWLIB_VER=4.5.0.20241231
+    NEWLIB_VER=4.6.0.20260123
     BINUTILS_PKGREL=2
-    GCC_PKGREL=3
-    NEWLIB_PKGREL=5
+    GCC_PKGREL=7
+    NEWLIB_PKGREL=3
     basedir='dka64'
     package=devkitA64
     target=aarch64-none-elf
