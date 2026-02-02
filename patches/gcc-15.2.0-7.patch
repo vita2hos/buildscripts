@@ -245,7 +245,7 @@ index 1939d55b9fd..62d425cb596 100644
   option nofp remove ALL_FP
 diff --git a/gcc/config/arm/devkitarm.h b/gcc/config/arm/devkitarm.h
 new file mode 100644
-index 00000000000..4d6c16a3db4
+index 00000000000..7f408d6d81d
 --- /dev/null
 +++ b/gcc/config/arm/devkitarm.h
 @@ -0,0 +1,33 @@
@@ -278,7 +278,7 @@ index 00000000000..4d6c16a3db4
 +    do {                                        \
 +        builtin_define ("__DEVKITPRO__");       \
 +        builtin_define ("__DEVKITARM__");       \
-+        TARGET_BPABI_CPP_BUILTINS();
++        TARGET_BPABI_CPP_BUILTINS();            \
 +    } while (0)
 +
 +
