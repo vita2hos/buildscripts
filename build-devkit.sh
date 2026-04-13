@@ -246,6 +246,7 @@ if [ $VERSION -eq 2 ]; then . ${BUILDSCRIPTDIR}/build-mn10200-binutils.sh || { e
 . ${BUILDSCRIPTDIR}/build-gcc-stage1.sh || { echo "Error building gcc stage1"; exit 1; };
 . ${BUILDSCRIPTDIR}/build-newlib.sh || { echo "Error building newlib"; exit 1; };
 . ${BUILDSCRIPTDIR}/build-gcc-stage2.sh || { echo "Error building gcc stage2"; exit 1; };
+. ${BUILDSCRIPTDIR}/fix-gcc-limits.sh || { echo "Error fixing gcc limits"; exit 1; };
 
 
 if [ "$BUILD_DKPRO_SKIP_CRTLS" != "1" ]; then
